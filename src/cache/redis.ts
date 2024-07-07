@@ -6,9 +6,7 @@ const redisClient = createClient({
   socket: {
     host: Env.REDIS_HOST,
     port: Env.REDIS_PORT,
-    tls: true,
   },
-  
 });
 
 redisClient.on("error", (error) => {
