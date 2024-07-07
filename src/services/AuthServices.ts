@@ -44,7 +44,7 @@ export default new (class AuthServices {
       user.email = email;
       user.password = passwordHashed;
       user.profile_picture =
-        "https://res.cloudinary.com/dogz0yvva/image/upload/v1698908295/nibiru-cloud-storage/qzgmgjmxwxbzvvzspwbz.png";
+        "https://res.cloudinary.com/dogz0yvva/image/upload/v1698908295/koleksi-resep/qwmq3qpujh4wjyuvuybb.png";
       await this.UserRepository.save(user);
 
       return res.status(201).json({
