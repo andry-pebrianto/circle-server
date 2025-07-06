@@ -3,7 +3,7 @@ version: '3.8'
 services:
   circle-server:
     build:
-      context: ./
+      context: .
     container_name: circle-server-container
     restart: always
     expose:
@@ -17,8 +17,9 @@ services:
     container_name: nginx-reverse-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - circle-server
- 
