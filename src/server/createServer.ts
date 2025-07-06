@@ -13,6 +13,7 @@ import UploadRoutes from "../routes/UploadRoutes";
 import UserRoutes from "../routes/UserRoutes";
 // import UploadCron from "../cron/UploadCron";
 import apiSpec from "../utils/swagger/apiSpec";
+import Env from "../utils/variables/Env";
 
 const createServer: Express = express();
 
@@ -21,7 +22,7 @@ createServer.use(helmet());
 createServer.use(cors());
 
 createServer.get("/", (req: Request, res: Response): Response<string> => {
-  return res.status(200).send("Server Online!");
+  return res.status(200).send(`Server Online - ${Env.NODE_ENV}`);
 });
 
 createServer.use("/api/v1/api-docs", swaggerUi.serve, swaggerUi.setup(apiSpec));
