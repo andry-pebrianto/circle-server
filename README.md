@@ -48,7 +48,7 @@ REDIS_PASSWORD=
 ```
 
 - Migrate database using `npm run migrate:up`
-
+ 
 ### Executing program
 
 - Run program with `npm run dev` for development and `npm run start` for production (must be compiled first with `npm run compile`)
