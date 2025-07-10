@@ -21,7 +21,7 @@ This is a Restful API repository for Circle. This Restful API is built using Exp
 ### Installation
 
 - Clone this project with `https://github.com/andry-pebrianto/circle-api.git`
-- Install package required with `npm`
+- Install package required with `npm install`
 - Setting .env
 
 ```bash
