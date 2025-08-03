@@ -27,24 +27,23 @@ This is a Restful API repository for Circle. This Restful API is built using Exp
 ```bash
 NODE_ENV=
 PORT=
-
 DB_HOST=
 DB_PORT=
 DB_USERNAME=
 DB_PASSWORD=
 DB_NAME=
-
 JWT_SECRET=
-
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
-
 AMQP_SERVER=
-
 REDIS_PORT=
 REDIS_HOST=
 REDIS_PASSWORD=
+VIRTUAL_HOST=
+LETSENCRYPT_HOST=
+LETSENCRYPT_EMAIL=
+MAX_OLD_SPACE_SIZE=
 ```
 
 - Migrate database using `npm run migrate:up`
@@ -58,7 +57,7 @@ REDIS_PASSWORD=
 ## Related Project
 
 - [Circle Client](https://github.com/andry-pebrianto/circle-client)
-- [Circle Demo](https://circle-community.netlify.app/)
+- [Circle Demo](https://circle.andrypebrianto.com)
 
 ## Authors
 

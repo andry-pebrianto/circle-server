@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
-// import cron from "node-cron";
+import cron from "node-cron";
 import swaggerUi from "swagger-ui-express";
 import handleError from "../utils/exception/handleError";
 import NotFoundError from "../utils/exception/custom/NotFoundError";
@@ -11,7 +11,7 @@ import AuthRoutes from "../routes/AuthRoutes";
 import FollowRoutes from "../routes/FollowRoutes";
 import UploadRoutes from "../routes/UploadRoutes";
 import UserRoutes from "../routes/UserRoutes";
-// import UploadCron from "../cron/UploadCron";
+import UploadCron from "../cron/UploadCron";
 import apiSpec from "../utils/swagger/apiSpec";
 import Env from "../utils/variables/Env";
 
@@ -33,10 +33,10 @@ createServer.use("/api/v1", FollowRoutes);
 createServer.use("/api/v1", UploadRoutes);
 createServer.use("/api/v1", UserRoutes);
 
-// cron.schedule("0 0 * * *", () => {
-//   // setiap jam 12 malam
-//   UploadCron.cleanUnusedCloudinaryFileDaily();
-// });
+cron.schedule("0 0 * * *", () => {
+  // setiap jam 12 malam
+  UploadCron.cleanUnusedCloudinaryFileDaily();
+});
 
 createServer.use((req: Request, res: Response): Response<string> => {
   return handleError(

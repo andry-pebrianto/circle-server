@@ -4,13 +4,31 @@ services:
   circle-server:
     build:
       context: .
-    container_name: circle-server-container
+    container_name: circle-server
     restart: always
     expose:
-      - 3001
+      - 3003
     env_file:
       - .env
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      NODE_OPTIONS: "--max-old-space-size=${MAX_OLD_SPACE_SIZE}"
     command: sh -c "npm run migrate:up && npm run start"
+    networks:
+      - global
+
+  circle-worker:
+    build:
+      context: .
+    container_name: circle-worker
+    restart: always
+    env_file:
+      - .env
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=${MAX_OLD_SPACE_SIZE}"
+    command: sh -c "npm run worker"
     networks:
       - global
 
