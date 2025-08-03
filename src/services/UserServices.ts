@@ -6,7 +6,7 @@ import { Upload } from "../../database/entities/Upload";
 import handleError from "../utils/exception/handleError";
 import NotFoundError from "../utils/exception/custom/NotFoundError";
 import BadRequestError from "../utils/exception/custom/BadRequestError";
-// import redisClient, { DEFAULT_EXPIRATION } from "../cache/redis";
+import redisClient, { DEFAULT_EXPIRATION } from "../cache/redis";
 
 export default new (class ThreadServices {
   private readonly UserRepository: Repository<User> =
@@ -122,15 +122,15 @@ export default new (class ThreadServices {
         );
       }
 
-      // const cacheFromRedis = await redisClient.get(`profile=${user.id}`);
-      // if (cacheFromRedis) {
-      // return res.status(200).json({
-      //   code: 200,
-      //   status: "success",
-      //   message: "Find One User By Jwt Success (Cache)",
-      //   data: JSON.parse(cacheFromRedis),
-      // });
-      // } else {
+      const cacheFromRedis = await redisClient.get(`profile=${user.id}`);
+      if (cacheFromRedis) {
+      return res.status(200).json({
+        code: 200,
+        status: "success",
+        message: "Find One User By Jwt Success (Cache)",
+        data: JSON.parse(cacheFromRedis),
+      });
+      } else {
       const followings = await this.UserRepository.query(
         "SELECT u.id, u.username, u.fullname, u.profile_picture FROM following as f INNER JOIN users as u ON u.id=f.following_id WHERE f.follower_id=$1",
         [res.locals.auth.id]
@@ -140,16 +140,16 @@ export default new (class ThreadServices {
         [res.locals.auth.id]
       );
 
-      // redisClient.setEx(
-      //   `profile=${user.id}`,
-      //   DEFAULT_EXPIRATION,
-      //   JSON.stringify({
-      //     ...user,
-      //     password: null,
-      //     followers,
-      //     followings,
-      //   })
-      // );
+      redisClient.setEx(
+        `profile=${user.id}`,
+        DEFAULT_EXPIRATION,
+        JSON.stringify({
+          ...user,
+          password: null,
+          followers,
+          followings,
+        })
+      );
 
       return res.status(200).json({
         code: 200,
@@ -162,7 +162,7 @@ export default new (class ThreadServices {
           followings,
         },
       });
-      // }
+      }
     } catch (error) {
       return handleError(res, error);
     }
